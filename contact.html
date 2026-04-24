@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contact — PINPOINT</title>
+  <meta name="description" content="Get in touch with the PINPOINT research team in Munich.">
+  <link rel="stylesheet" href="pinpoint.css">
+</head>
+<body>
+
+<!-- NAVIGATION -->
+<nav id="nav">
+  <div class="container nav-inner">
+    <a href="index.html" class="nav-logo">
+      <span class="nav-logo-name">PINPOINT</span>
+      <span class="nav-logo-sub">ERC Research Project</span>
+    </a>
+    <button class="nav-hamburger" id="nav-hamburger" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+    <ul class="nav-menu" id="nav-menu">
+      <li><a href="index.html"      class="nav-link">Home</a></li>
+      <li><a href="about.html"      class="nav-link">About</a></li>
+      <li><a href="research.html"   class="nav-link">Research</a></li>
+      <li><a href="portraits.html"  class="nav-link">Portraits</a></li>
+      <li><a href="news.html"       class="nav-link">News</a></li>
+      <li><a href="contact.html"    class="nav-link">Contact</a></li>
+    </ul>
+  </div>
+</nav>
+
+
+<!-- PAGE HEADER -->
+<header class="page-header">
+  <div class="container">
+    <div class="divider" style="margin-bottom: clamp(32px, 5vw, 64px);"></div>
+    <div class="page-header-inner">
+      <div>
+        <div class="page-header-label"><span class="label">Get in touch</span></div>
+        <h1 class="page-header-title">Con<span style="color:var(--pin);">·</span><br>tact</h1>
+      </div>
+      <p class="page-header-desc">
+        For research inquiries, collaboration proposals, or media requests,
+        please use the form below or reach us directly in Munich.
+      </p>
+    </div>
+  </div>
+</header>
+
+<div class="divider"></div>
+
+
+<!-- CONTACT BODY -->
+<section class="section">
+  <div class="container">
+    <div class="contact-grid">
+
+      <!-- Form -->
+      <div class="contact-form fade-up">
+        <div style="display:flex; align-items:center; gap:12px; margin-bottom:36px;">
+          <span class="deco-pin" data-size="13"></span>
+          <span class="label">Send a message</span>
+        </div>
+
+        <!--
+        ═══════════════════════════════════════════
+        CONTACT FORM — powered by Web3Forms (free)
+        ═══════════════════════════════════════════
+        SETUP (one-time, takes 30 seconds):
+        1. Go to https://web3forms.com
+        2. Enter your email address → click "Create Access Key"
+        3. Copy the access key you receive
+        4. Replace YOUR_ACCESS_KEY_HERE below with it
+        5. That's it — submissions arrive in your inbox
+           AND optionally in a Google Sheet (see web3forms.com/integrations)
+
+        No server, no database, no cost. Free tier = unlimited submissions.
+        ═══════════════════════════════════════════
+        -->
+        <form id="contact-form" action="https://api.web3forms.com/submit" method="POST" novalidate>
+
+          <!-- Web3Forms hidden config -->
+          <input type="hidden" name="access_key" value="YOUR_ACCESS_KEY_HERE">
+          <input type="hidden" name="subject" value="New message from PINPOINT website">
+          <input type="hidden" name="from_name" value="PINPOINT Contact Form">
+          <!-- Redirect after successful submission (optional — set to a thank-you page or leave as is) -->
+          <input type="hidden" name="redirect" value="">
+          <!-- Honeypot spam protection -->
+          <input type="checkbox" name="botcheck" style="display:none;">
+
+          <div class="form-group">
+            <label class="form-label" for="name">Name</label>
+            <input type="text" id="name" name="name" class="form-input" placeholder="Your full name" required>
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="email">Email</label>
+            <input type="email" id="email" name="email" class="form-input" placeholder="your@email.com" required>
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="affiliation">Affiliation</label>
+            <input type="text" id="affiliation" name="affiliation" class="form-input" placeholder="University / institution (optional)">
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="topic">Subject</label>
+            <select id="topic" name="topic" class="form-select form-input">
+              <option value="" disabled selected>Select a topic</option>
+              <option>Research inquiry</option>
+              <option>Collaboration proposal</option>
+              <option>Data request</option>
+              <option>Media / press</option>
+              <option>Other</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="message">Message</label>
+            <textarea id="message" name="message" class="form-textarea" placeholder="Your message…" rows="5" required></textarea>
+          </div>
+
+          <!-- Status messages -->
+          <div id="form-success" style="display:none; padding:14px 0; font-size:12px; font-weight:400; color:#4A7A5A; letter-spacing:0.06em;">
+            ✓ Message sent — we'll be in touch soon.
+          </div>
+          <div id="form-error" style="display:none; padding:14px 0; font-size:12px; font-weight:400; color:var(--pin); letter-spacing:0.06em;">
+            Something went wrong. Please try again or email us directly.
+          </div>
+
+          <button type="submit" class="btn-submit" id="submit-btn">
+            Send message
+            <svg width="14" height="10" viewBox="0 0 14 10" fill="none">
+              <path d="M0 5h12M8 1l4 4-4 4" stroke="currentColor" stroke-width="1"/>
+            </svg>
+          </button>
+        </form>
+
+        <script>
+        (function () {
+          const form    = document.getElementById('contact-form');
+          const btn     = document.getElementById('submit-btn');
+          const success = document.getElementById('form-success');
+          const error   = document.getElementById('form-error');
+          if (!form) return;
+
+          form.addEventListener('submit', async function (e) {
+            e.preventDefault();
+
+            // Basic validation
+            const key = form.querySelector('[name="access_key"]').value;
+            if (key === 'YOUR_ACCESS_KEY_HERE') {
+              error.textContent = 'Please add your Web3Forms access key first (see comment in HTML).';
+              error.style.display = 'block';
+              return;
+            }
+
+            btn.textContent = 'Sending…';
+            btn.disabled = true;
+            success.style.display = 'none';
+            error.style.display   = 'none';
+
+            try {
+              const data = new FormData(form);
+              const res  = await fetch('https://api.web3forms.com/submit', {
+                method: 'POST',
+                body: data
+              });
+              const json = await res.json();
+
+              if (json.success) {
+                success.style.display = 'block';
+                form.reset();
+                btn.textContent = 'Send message';
+                btn.disabled = false;
+              } else {
+                throw new Error(json.message);
+              }
+            } catch (err) {
+              error.style.display = 'block';
+              btn.textContent = 'Send message';
+              btn.disabled = false;
+            }
+          });
+        })();
+        </script>
+      </div>
+
+      <!-- Info -->
+      <div class="contact-info fade-up" style="transition-delay:0.15s;">
+
+        <!-- Map placeholder -->
+        <div class="contact-map-placeholder">
+          <div class="map-grid"></div>
+          <div class="map-pin-center">
+            <span class="deco-pin" data-size="28"></span>
+            <div class="map-address-text">
+              Maria-Theresia-Str. 21<br>
+              Munich, Germany
+            </div>
+          </div>
+        </div>
+
+        <div style="margin-bottom: 36px;">
+          <div class="sidebar-title" style="margin-bottom:12px;">Postal Address</div>
+          <div class="address-block">
+            <strong>PINPOINT Research Project</strong><br>
+            Prof. Dr. Timm Betz<br>
+            Ludwig-Maximilians-Universität München<br>
+            Maria-Theresia-Straße 21<br>
+            81675 Munich<br>
+            Germany
+          </div>
+        </div>
+
+        <div style="margin-bottom: 36px;">
+          <div class="sidebar-title" style="margin-bottom:12px;">External Links</div>
+          <div style="display:flex; flex-direction:column; gap: 8px;">
+            <a href="https://cordis.europa.eu/project/id/101041658" target="_blank"
+               style="font-size:12px;font-weight:300;color:var(--ink-mid);border-bottom:1px solid var(--paper);padding-bottom:8px;display:flex;justify-content:space-between;align-items:center;transition:color .2s,border-color .2s;"
+               onmouseover="this.style.color='var(--pin)';this.style.borderColor='var(--pin)'"
+               onmouseout="this.style.color='';this.style.borderColor=''">
+              CORDIS Project Record <span>→</span>
+            </a>
+            <a href="https://doi.org/10.3030/101041658" target="_blank"
+               style="font-size:12px;font-weight:300;color:var(--ink-mid);border-bottom:1px solid var(--paper);padding-bottom:8px;display:flex;justify-content:space-between;align-items:center;transition:color .2s,border-color .2s;"
+               onmouseover="this.style.color='var(--pin)';this.style.borderColor='var(--pin)'"
+               onmouseout="this.style.color='';this.style.borderColor=''">
+              DOI 10.3030/101041658 <span>→</span>
+            </a>
+          </div>
+        </div>
+
+        <div>
+          <div class="sidebar-title" style="margin-bottom:12px;">Funded by</div>
+          <div class="erc-badge">
+            <div class="erc-badge-dot"><span>ERC</span></div>
+            <div class="erc-badge-text">
+              <strong>European Research Council</strong>
+              Starting Grant · Horizon Europe<br>
+              Grant Agreement 101041658
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- FOOTER -->
+<footer>
+  <div class="container">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <div class="footer-logo-name">PINPOINT</div>
+        <p class="footer-brand-desc">Politics, Institutions, and Production Networks. ERC Starting Grant 101041658.</p>
+        <div class="footer-erc"><div class="footer-erc-dot"></div>European Research Council</div>
+      </div>
+      <div class="footer-col">
+        <div class="footer-col-title">Navigate</div>
+        <ul class="footer-col-links">
+          <li><a href="index.html"     class="footer-col-link">Home</a></li>
+          <li><a href="about.html"     class="footer-col-link">About</a></li>
+          <li><a href="research.html"  class="footer-col-link">Research</a></li>
+          <li><a href="portraits.html" class="footer-col-link">Portraits</a></li>
+          <li><a href="contact.html"   class="footer-col-link">Contact</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <div class="footer-col-title">Research</div>
+        <ul class="footer-col-links">
+          <li><a href="research.html" class="footer-col-link">Working Papers</a></li>
+          <li><a href="research.html" class="footer-col-link">Publications</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <div class="footer-col-title">Links</div>
+        <ul class="footer-col-links">
+          <li><a href="https://cordis.europa.eu/project/id/101041658" target="_blank" class="footer-col-link">CORDIS</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span class="footer-copyright">© 2024 PINPOINT Project · Ludwig-Maximilians-Universität München</span>
+      <div class="footer-bottom-links">
+        <a href="#" class="footer-bottom-link">Imprint</a>
+        <a href="#" class="footer-bottom-link">Privacy</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script src="pinpoint.js"></script>
+</body>
+</html>
